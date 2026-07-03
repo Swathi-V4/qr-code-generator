@@ -1,171 +1,71 @@
-# 📦 Project Setup
+# QR Code Generator
+
+## Overview
+
+This project is a Python-based QR Code Generator that creates QR codes from a user-provided URL. The application uses environment variables for configuration, generates QR code images, and stores them in a designated output folder. The project has been containerized using Docker for portability and ease of deployment.
 
 ---
 
-# 🧩 1. Install Homebrew (Mac Only)
+## Features
 
-> Skip this step if you're on Windows.
-
-Homebrew is a package manager for macOS.  
-You’ll use it to easily install Git, Python, Docker, etc.
-
-**Install Homebrew:**
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-**Verify Homebrew:**
-
-```bash
-brew --version
-```
-
-If you see a version number, you're good to go.
+- Generate QR codes from URLs
+- Save generated QR code images automatically
+- Uses environment variables for configuration
+- Dockerized application for consistent deployment
+- GitHub Actions workflow for automated Docker image builds
 
 ---
 
-# 🧩 2. Install and Configure Git
+## Technologies Used
 
-## Install Git
-
-- **MacOS (using Homebrew)**
-
-```bash
-brew install git
-```
-
-- **Windows**
-
-Download and install [Git for Windows](https://git-scm.com/download/win).  
-Accept the default options during installation.
-
-**Verify Git:**
-
-```bash
-git --version
-```
+- Python 3.12
+- Docker
+- Git
+- GitHub
+- GitHub Actions
+- qrcode
+- Pillow
+- python-dotenv
 
 ---
 
-## Configure Git Globals
+## Project Structure
 
-Set your name and email so Git tracks your commits properly:
-
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your_email@example.com"
 ```
-
-Confirm the settings:
-
-```bash
-git config --list
+qr-code-generator/
+│
+├── .github/
+│   └── workflows/
+│       └── docker.yml
+├── qr_codes/
+├── Dockerfile
+├── docker-compose.yml
+├── main.py
+├── requirements.txt
+├── .dockerignore
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## Generate SSH Keys and Connect to GitHub
+## Installation
 
-> Only do this once per machine.
-
-1. Generate a new SSH key:
+Clone the repository:
 
 ```bash
-ssh-keygen -t ed25519 -C "your_email@example.com"
+git clone https://github.com/Swathi-V4/qr-code-generator.git
+cd qr-code-generator
 ```
 
-(Press Enter at all prompts.)
-
-2. Start the SSH agent:
-
-```bash
-eval "$(ssh-agent -s)"
-```
-
-3. Add the SSH private key to the agent:
-
-```bash
-ssh-add ~/.ssh/id_ed25519
-```
-
-4. Copy your SSH public key:
-
-- **Mac/Linux:**
-
-```bash
-cat ~/.ssh/id_ed25519.pub | pbcopy
-```
-
-- **Windows (Git Bash):**
-
-```bash
-cat ~/.ssh/id_ed25519.pub | clip
-```
-
-5. Add the key to your GitHub account:
-   - Go to [GitHub SSH Settings](https://github.com/settings/keys)
-   - Click **New SSH Key**, paste the key, save.
-
-6. Test the connection:
-
-```bash
-ssh -T git@github.com
-```
-
-You should see a success message.
-
----
-
-# 🧩 3. Clone the Repository
-
-Now you can safely clone the course project:
-
-```bash
-git clone <repository-url>
-cd <repository-directory>
-```
-
----
-
-# 🛠️ 4. Install Python 3.10+
-
-## Install Python
-
-- **MacOS (Homebrew)**
-
-```bash
-brew install python
-```
-
-- **Windows**
-
-Download and install [Python for Windows](https://www.python.org/downloads/).  
-✅ Make sure you **check the box** `Add Python to PATH` during setup.
-
-**Verify Python:**
-
-```bash
-python3 --version
-```
-or
-```bash
-python --version
-```
-
----
-
-## Create and Activate a Virtual Environment
-
-(Optional but recommended)
+Create a virtual environment:
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate.bat  # Windows
+source venv/bin/activate
 ```
 
-### Install Required Packages
+Install the required packages:
 
 ```bash
 pip install -r requirements.txt
@@ -173,92 +73,67 @@ pip install -r requirements.txt
 
 ---
 
-# 🐳 5. (Optional) Docker Setup
+## Running the Application
 
-> Skip if Docker isn't used in this module.
-
-## Install Docker
-
-- [Install Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/)
-- [Install Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)
-
-## Build Docker Image
-
-```bash
-docker build -t <image-name> .
-```
-
-## Run Docker Container
-
-```bash
-docker run -it --rm <image-name>
-```
-
----
-
-# 🚀 6. Running the Project
-
-- **Without Docker**:
+Run the application locally:
 
 ```bash
 python main.py
 ```
 
-(or update this if the main script is different.)
+The generated QR code will be saved in the **qr_codes** folder.
 
-- **With Docker**:
+---
+
+## Running with Docker
+
+Build the Docker image:
 
 ```bash
-docker run -it --rm <image-name>
+docker build -t qr-code-generator-app .
+```
+
+Run the Docker container:
+
+```bash
+docker run -d --name qr-generator qr-code-generator-app
+```
+
+View the container logs:
+
+```bash
+docker logs qr-generator
+```
+
+Stop and remove the container:
+
+```bash
+docker stop qr-generator
+docker rm qr-generator
 ```
 
 ---
 
-# 📝 7. Submission Instructions
+## DockerHub
 
-After finishing your work:
+Docker image:
 
-```bash
-git add .
-git commit -m "Complete Module X"
-git push origin main
-```
-
-Then submit the GitHub repository link as instructed.
+https://hub.docker.com/r/swathi638/qr-code-generator-app
 
 ---
 
-# 🔥 Useful Commands Cheat Sheet
+## GitHub Repository
 
-| Action                         | Command                                          |
-| ------------------------------- | ------------------------------------------------ |
-| Install Homebrew (Mac)          | `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` |
-| Install Git                     | `brew install git` or Git for Windows installer |
-| Configure Git Global Username  | `git config --global user.name "Your Name"`      |
-| Configure Git Global Email     | `git config --global user.email "you@example.com"` |
-| Clone Repository                | `git clone <repo-url>`                          |
-| Create Virtual Environment     | `python3 -m venv venv`                           |
-| Activate Virtual Environment   | `source venv/bin/activate` / `venv\Scripts\activate.bat` |
-| Install Python Packages        | `pip install -r requirements.txt`               |
-| Build Docker Image              | `docker build -t <image-name> .`                |
-| Run Docker Container            | `docker run -it --rm <image-name>`               |
-| Push Code to GitHub             | `git add . && git commit -m "message" && git push` |
+https://github.com/Swathi-V4/qr-code-generator
 
 ---
 
-# 📋 Notes
+## Continuous Integration
 
-- Install **Homebrew** first on Mac.
-- Install and configure **Git** and **SSH** before cloning.
-- Use **Python 3.10+** and **virtual environments** for Python projects.
-- **Docker** is optional depending on the project.
+This project uses GitHub Actions to automatically build the Docker image whenever changes are pushed to the **main** branch.
 
 ---
 
-# 📎 Quick Links
+## Author
 
-- [Homebrew](https://brew.sh/)
-- [Git Downloads](https://git-scm.com/downloads)
-- [Python Downloads](https://www.python.org/downloads/)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [GitHub SSH Setup Guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+**Swathi Veerapalli**
